@@ -1,10 +1,10 @@
-Causal Inference (PH 252D) at University of California, Berkeley
+causal_inference
 ================
 
-This is the portfolio of my work in this course. 
+This is the portfolio of my work in Causal Inference (PH 252D) at University of California, Berkeley
 
 
-*Course summary*: This course presents a general framework for causal inference. Directed acyclic graphs and non-parametric structural equation models (NPSEM) are used to define the causal model. Target causal parameters are defined using counterfactuals and marginal structural models. G-computation estimators, inverse probability weighted estimators, and targeted maximum likelihood estimators are introduced. Non-parametric and semi-parametric approaches to nuisance parameter estimation, with an emphasis on Super Learning, are presented. Students gain practical experience implementing these estimators and interpreting results through discussion assignments, R labs, and R assignments. 
+**Course summary**: This course presents a general framework for causal inference. Directed acyclic graphs and non-parametric structural equation models (NPSEM) are used to define the causal model. Target causal parameters are defined using counterfactuals and marginal structural models. G-computation estimators, inverse probability weighted estimators, and targeted maximum likelihood estimators are introduced. Non-parametric and semi-parametric approaches to nuisance parameter estimation, with an emphasis on Super Learning, are presented. Students gain practical experience implementing these estimators and interpreting results through discussion assignments, R labs, and R assignments. 
 
 **Course learning objectives**:
 
@@ -18,7 +18,7 @@ This is the portfolio of my work in this course.
 
 5)    Time permitting: Understand the challenge of time-dependent confounding in longitudinal data and the limitations of traditional regression-based adjustment.
 
-*Labs and Assignments*
+**Labs and Assignments**
 
 Lab & Hw 1: Defining the causal parameter and introduction to simulations in R
 
