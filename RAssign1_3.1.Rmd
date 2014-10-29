@@ -1,0 +1,52 @@
+---
+title: 'Causal Inference Assignment #1: 3.1'
+author: "Janelle Downing"
+date: "October 14, 2014"
+output:
+  html_document:
+    smaller: yes
+    theme: cosmo
+---
+
+
+**Translating this data generating process for PU;X into simulations, generating counterfactual outcomes and evaluating the target causal parameter.**
+
+*1. First set the seed to 252.*
+```{r}
+set.seed(252)
+```
+
+*2. Set n=5000 as the number of i.i.d. draws from the data generating process.*
+```{r}
+n = 5000
+```
+*3. Simulate the background factors U.*
+```{r}
+U.W1 = runif(n, 0, 1)
+U.W2 = runif(n, 0, 1)
+U.A = runif(n, 0, 1)
+U.Y = rnorm(n, mean=0, sd=0.3)
+```
+*4. Evaluate the structural equations F to deterministically generate the endogenous nodes X.*
+```{r}
+W1 = as.numeric(U.W1 < 0.2)
+W2 = as.numeric(U.W2 < (plogis(W1*0.5)))
+A = as.numeric(U.A < (plogis((W1*W2))))
+Y = (4*A) + (0.7*W1) - (2*A*W2) + U.Y
+```
+*5. Intervene to set the supplement to RUTF (A = 1) and generate counterfactual outcomes Y1 for n units. Then intervene to set the supplement to the standard (A = 0) and generate counterfactual outcomes Y0 for n units.*
+```{r}
+Y.1 <- (4*1) + (0.7*W1) - (2*1*W2) + U.Y  
+Y.0 <- (4*0) + (0.7*W1) - (2*0*W2) + U.Y
+```
+*6. Create a data frame X to hold the values of the endogenous factors (W1;W2; A; Y ) and the counterfactual outcomes Y1 and Y0. The rows are the n children and the columns are their characteristics. Use the head and summary to examine the resulting data.*
+```{r}
+X<- data.frame(W1, W2, A, Y, Y.1, Y.0)
+head(X)
+summary(X)
+```
+*7. Evaluate the causal parameter.*
+```{r}
+Psi.F<- mean(Y.1 - Y.0)
+Psi.F
+```

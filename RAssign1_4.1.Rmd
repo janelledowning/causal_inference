@@ -1,0 +1,68 @@
+---
+title: 'Causal Inference Assignment #1: 4.1'
+author: "Janelle Downing"
+date: "October 14, 2014"
+output:
+  html_document:
+    smaller: yes
+    theme: cosmo
+---
+
+**Defining the target causal parameter with a working MSM**
+
+*4.1 A specific data generating process*
+
+
+*1a. For n = 5000 children, generate the exogenous factors U and the pre-intervention covariates (V;W1;W2).*
+
+```{r}
+set.seed(252)
+n = 5000
+#Setting the exogenous factors:
+U.V = runif(n, 0, 3)
+U.W1 = runif(n, 0, 1)
+U.W2 = runif(n, 0, 1)
+U.A = runif(n, 0, 1)
+U.Y = rnorm(n, mean=0, sd=0.1)
+
+#Setting the endogenous factors:
+V = 2 + U.V
+W1 = as.numeric(U.W1 < 0.2)
+W2 = as.numeric(U.W2 < (plogis(W1*0.5)))
+A = as.numeric(U.A < (plogis(W1*W2 + (V/5))))
+Y = 2*A + 0.3*W1 + 2*A*W2 + 0.5*A*V + U.Y
+```
+*1b. Then set A = 1 to generate the counterfactual weight gain under RUTF Y1. Likewise, set A = 0 to generate the counterfactual weight gain under the standard supplement Y0.*
+```{r}
+Y.0 <-2*0 + 0.3*W1 + 2*0*W2 + 0.5*0*V + U.Y
+Y.1 <-2*1 + 0.3*W1 + 2*1*W2 + 0.5*1*V + U.Y
+```
+
+*2. Create a data frame X.msm consisting of age V , the set treatment levels a and the corresponding outcomes Ya, where V (i) and Ya(i) denote the age and counterfactual outcome for the ith subject.*
+```{r}
+#Combines into a vector
+Y.a <- c(Y.0, Y.1)
+#Get vector of corresponding treatments
+a<- c( rep(0,n), rep(1, n))
+
+X.msm <-data.frame(a, Y.a, V)
+head(X.msm)
+summary(X.msm)
+```
+*3. Evaluate the target causal parameter.*
+Without an interaction term
+```{r}
+workMSM <- glm(formula = Y.a ~ a + V, data=X.msm)
+summary(workMSM)
+```
+With an interaction term
+```{r}
+workMSM <- glm(formula = Y.a ~ a + V*a, data=X.msm)
+summary(workMSM)
+```
+
+*4. Interpret the results.*
+The MSM without the interaction term yields coefficents of ~ B0 = -0.793, B1 = 4.817, and B2 = 0.243.
+If we believe that the MSM has a linear form, then the coefficent of B1 would suggest that receipt of RUTF results in a 4.817 lb higher mean counterfactual weight gain after adjusting for age. The intercept would be interpreted as the expected counterfactual weight gain is -0.793 lbs (i.e. weight loss of 0.793 lbs), regardless of treatment(A) or age(V). On average, for each year of age, children will weigh 0.243 lbs more.
+
+The MSM with the interaction term yields coefficents of ~ ~ B0 = 0.072, B1 = 3.088, B2= -0.002, and B3 = 0.490. B0 and B2 are insignificant, no different from zero. This model appears to fit the data a bit better than the non-interacted model based on the AIC. This can be interpreted as the receipt of RUTF (taking out the effect of age) results in a 3.09 lb higher mean counterfactual weight gain. There is no difference in mean expected counterfactual weight gain by age for those who did not receive RUTF. For each additional year of age, those on RUTF can expect to have a mean counterfactual weight gain of 0.49lbs. For example, a child on RUTF who is 3 is expected to have a 3.09 + 0.49*3 (or ~ 4.60 lb) weight gain while a child of 1 would have a 3.09 + 0.49 (3.60lb) weight gain. 
