@@ -1,4 +1,4 @@
-causal_inference
+Causal Inference
 ================
 
 This is the portfolio of my work in Causal Inference (PH 252D) at University of California, Berkeley
