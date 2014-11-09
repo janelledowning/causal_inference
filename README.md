@@ -1,7 +1,7 @@
-causal_inference
+Causal Inference
 ================
 
-This is the portfolio of my work in Causal Inference (PH 252D) at University of California, Berkeley
+This is the portfolio of my work in a Fall 2014 course, Causal Inference, at University of California, Berkeley
 
 **Course summary**: This course presents a general framework for causal inference. Directed acyclic graphs and non-parametric structural equation models (NPSEM) are used to define the causal model. Target causal parameters are defined using counterfactuals and marginal structural models. G-computation estimators, inverse probability weighted estimators, and targeted maximum likelihood estimators are introduced. Non-parametric and semi-parametric approaches to nuisance parameter estimation, with an emphasis on Super Learning, are presented. 
 
