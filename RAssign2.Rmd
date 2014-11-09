@@ -1,8 +1,8 @@
 ---
-title: "Causal Inference: R Assignment #2"
+title: 'Causal Inference: R Assignment #2'
 author: "Janelle Downing"
 date: "October 27, 2014"
-output: html_document
+output: pdf_document
 ---
 **Part 2: A specific data generating process**
 
